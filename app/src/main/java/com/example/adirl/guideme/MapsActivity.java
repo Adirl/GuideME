@@ -12,6 +12,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -36,14 +37,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Jerusalem and move the camera
         LatLng Jerusalem = new LatLng(31.771959, 35.217018);
-        mMap.addMarker(new MarkerOptions().position(Jerusalem).title("Marker in Jerusalem"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(Jerusalem));
+//        mMap.addMarker(new MarkerOptions().position(Jerusalem).title("Marker in Jerusalem"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Jerusalem, 10));
         mMap.setMyLocationEnabled(true);
         mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(31.771959, 35.217018))
-                .title("Jerusalem"));
+                .position(Jerusalem)
+                .title("Jerusalem")
+                .snippet("the holy city in Israel!")
+                .
+        );
     }
-
     public void onSearch (View view) {
         EditText location_tf = (EditText)findViewById(R.id.TFaddress);
         String location = location_tf.getText().toString();
@@ -57,8 +60,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
             Address address = addressList.get(0);
             LatLng latlan = new LatLng(address.getLatitude(), address.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(latlan).title("Marker"));
+            mMap.addMarker(new MarkerOptions()
+                    .position(latlan)
+                    .title("Marker"));
+
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latlan));
+
             }
     }
 
