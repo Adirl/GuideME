@@ -44,9 +44,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .position(Jerusalem)
                 .title("Jerusalem")
                 .snippet("the holy city in Israel!")
-                .
         );
     }
+
+    public void onMapType (View view)
+    {
+        if (mMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL)
+        {
+            mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        }
+        else
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+    }
+
     public void onSearch (View view) {
         EditText location_tf = (EditText)findViewById(R.id.TFaddress);
         String location = location_tf.getText().toString();
