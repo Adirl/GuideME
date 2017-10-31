@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,7 +22,6 @@ import java.util.List;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +35,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        if (mMap != null) {
+            mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter(){
+                @Override
+                public View getInfoWindow(Marker marker) {
+                    return null;
+                }
+                @Override
+                public View getInfoContents(Marker marker) {
+                    View v = getLayoutInflater().inflate(R.layout.my_info_window, null);
+                    TextView tvLocality = (TextView)v.findViewById(R.id.tv_locality);
+                    TextView tvLat = (TextView)v.findViewById(R.id.tv_lat);
+                    TextView tvLong = (TextView)v.findViewById(R.id.tv_long);
+
+                    LatLng ll = marker.getPosition();
+                    tvLocality.setText(marker.getTitle());
+                    tvLat.setText("Latitude: " + ll.latitude);
+                    tvLong.setText("Longtitude: " + ll.longitude);
+
+                    return v;
+                }
+            });
+        }
+
         // Add a marker in Jerusalem and move the camera
         LatLng Jerusalem = new LatLng(31.771959, 35.217018);
 //        mMap.addMarker(new MarkerOptions().position(Jerusalem).title("Marker in Jerusalem"));
@@ -46,7 +69,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .snippet("the holy city in Israel!")
         );
     }
-
     public void onMapType (View view)
     {
         if (mMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL)
@@ -72,7 +94,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng latlan = new LatLng(address.getLatitude(), address.getLongitude());
             mMap.addMarker(new MarkerOptions()
                     .position(latlan)
-                    .title("Marker"));
+                    .title(address.getLocality()));
 
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latlan));
 
@@ -80,3 +102,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 }
+
+
+
+//https://youtu.be/Oa7PvB2KADo
