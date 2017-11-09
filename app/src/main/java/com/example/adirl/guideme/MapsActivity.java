@@ -70,15 +70,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.setMyLocationEnabled(true);
 
-        // Add a marker in Jerusalem and move the camera
-//        LatLng Jerusalem = new LatLng(31.771959, 35.217018);
-//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Jerusalem, 10));
-//        Marker m1 = mMap.addMarker(new MarkerOptions()
-//                .position(Jerusalem)
-//                .title("Jerusalem")
-//                .snippet("the holy city in Israel!")
-//        );
-
         LatLng Sepulchre = new LatLng(31.7785, 35.2296);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Sepulchre, 15));
         Marker mSepulchre = mMap.addMarker(new MarkerOptions()
@@ -90,7 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(this, "Yofi", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Opennning video", Toast.LENGTH_SHORT).show();
         String url = "https://youtu.be/Oa7PvB2KADo";
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
@@ -130,7 +121,3 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 }
-
-
-
-//https://youtu.be/Oa7PvB2KADo

@@ -19,13 +19,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView1"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/tv_snippet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView1"
             android:textSize="12sp" />
+        <TextView
+            android:id="@+id/link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click to watch video"
+            android:textSize="12sp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"/>
+        />
         <TextView
             android:id="@+id/tv_lat"
             android:layout_width="wrap_content"
