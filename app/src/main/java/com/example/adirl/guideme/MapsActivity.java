@@ -1,12 +1,15 @@
 package com.example.adirl.guideme;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,21 +22,27 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+import static com.example.adirl.guideme.R.id.map;
+
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+        GoogleMap.OnInfoWindowClickListener
+{
 
     private GoogleMap mMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(map);
         mapFragment.getMapAsync(this);
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnInfoWindowClickListener(this);
 
         if (mMap != null) {
             mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter(){
@@ -45,11 +54,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 public View getInfoContents(Marker marker) {
                     View v = getLayoutInflater().inflate(R.layout.my_info_window, null);
                     TextView tvLocality = (TextView)v.findViewById(R.id.tv_locality);
+                    TextView tvSnippet = (TextView)v.findViewById(R.id.tv_snippet);
                     TextView tvLat = (TextView)v.findViewById(R.id.tv_lat);
                     TextView tvLong = (TextView)v.findViewById(R.id.tv_long);
 
                     LatLng ll = marker.getPosition();
                     tvLocality.setText(marker.getTitle());
+                    tvSnippet.setText(marker.getSnippet());
                     tvLat.setText("Latitude: " + ll.latitude);
                     tvLong.setText("Longtitude: " + ll.longitude);
 
@@ -57,18 +68,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             });
         }
+        mMap.setMyLocationEnabled(true);
 
         // Add a marker in Jerusalem and move the camera
-        LatLng Jerusalem = new LatLng(31.771959, 35.217018);
-//        mMap.addMarker(new MarkerOptions().position(Jerusalem).title("Marker in Jerusalem"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Jerusalem, 10));
-        mMap.setMyLocationEnabled(true);
-        mMap.addMarker(new MarkerOptions()
-                .position(Jerusalem)
-                .title("Jerusalem")
-                .snippet("the holy city in Israel!")
+//        LatLng Jerusalem = new LatLng(31.771959, 35.217018);
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Jerusalem, 10));
+//        Marker m1 = mMap.addMarker(new MarkerOptions()
+//                .position(Jerusalem)
+//                .title("Jerusalem")
+//                .snippet("the holy city in Israel!")
+//        );
+
+        LatLng Sepulchre = new LatLng(31.7785, 35.2296);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Sepulchre, 15));
+        Marker mSepulchre = mMap.addMarker(new MarkerOptions()
+            .position(Sepulchre)
+            .title("Church of the Holy Sepulchre")
+            .snippet("The Church of the Holy Sepulchre is a church in the Christian Quarter of the Old City of Jerusalem")
         );
     }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Toast.makeText(this, "Yofi", Toast.LENGTH_SHORT).show();
+        String url = "https://youtu.be/Oa7PvB2KADo";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    }
+
     public void onMapType (View view)
     {
         if (mMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL)

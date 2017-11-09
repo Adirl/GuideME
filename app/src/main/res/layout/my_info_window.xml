@@ -21,17 +21,23 @@
             android:text="TextView1"
             android:textSize="15sp" />
         <TextView
+            android:id="@+id/tv_snippet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView1"
+            android:textSize="12sp" />
+        <TextView
             android:id="@+id/tv_lat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView2"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
         <TextView
             android:id="@+id/tv_long"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView3"
-            android:textSize="10sp" />
+            android:textSize="8sp" />
 
     </LinearLayout>
 
